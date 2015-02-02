@@ -11,7 +11,7 @@ public class MainPanel extends JPanel{
 	int frameSizeX;
 	int frameSizeY;
 	
-	int cannonCount = 10;
+	int cannonCount = 20;
 	
 	WaterCannon[] waterCannon = new WaterCannon[cannonCount];
 	
