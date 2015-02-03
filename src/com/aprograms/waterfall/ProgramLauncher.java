@@ -16,7 +16,7 @@ public class ProgramLauncher {
 		int frameSizeX = 1000;
 		int frameSizeY = 1000;
 		
-		int delay = 50;
+		int delay = 1;
 		
 		JFrame application = new JFrame();
 		

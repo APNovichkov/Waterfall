@@ -7,7 +7,7 @@ public class Droplet {
 	int x;
 	int y;
 	
-	int dDiameter = 10;
+	int dDiameter = 6;
 	
 	
 	

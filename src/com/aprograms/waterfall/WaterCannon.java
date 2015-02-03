@@ -38,7 +38,7 @@ public class WaterCannon {
 	
 	public void setDropletParameters(){
 		for(int i = 0; i < droplets.size(); i++){
-			droplets.get(i).x = (frameSizeX/cannonCount)*cannonIndex + (frameSizeX/cannonCount/2);
+			droplets.get(i).x = (frameSizeX/cannonCount)*cannonIndex + (frameSizeX/cannonCount/2)-1;
 			droplets.get(i).y+=5;
 		}
 	}
@@ -53,8 +53,10 @@ public class WaterCannon {
 //		for(int i = 0; i < droplets.size(); i++){
 //			createDroplet(i);
 //		}
+		if(currentTime == 5){
+			createDroplet(0);
+		}
 		
-		createDroplet(0);
 	}
 	
 	
