@@ -16,14 +16,14 @@ public class ProgramLauncher {
 		int frameSizeX = 1000;
 		int frameSizeY = 1000;
 		
-		int delay = 1;
+		int delay = 100;
 		
 		JFrame application = new JFrame();
 		
 		application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		application.setSize(frameSizeX, frameSizeY);
 		
-		mp = new MainPanel(frameSizeX, frameSizeY);
+		mp = new MainPanel(frameSizeX, frameSizeY, delay);
 		
 		application.add(mp);
 		application.setVisible(true);
