@@ -13,20 +13,24 @@ public class MainPanel extends JPanel{
 	int frameSizeY;
 	
 	int delay;
+	int amountOfDroplets = 200;
 	
-	int cannonCount = 100;
+	int cannonCount = 1;
+	int currentTime;
+	
+	
+	
 	
 	WaterCannon[] waterCannon = new WaterCannon[cannonCount];
 	
-	public Vector<Boolean> dropletPattern = new Vector<Boolean>(100);
+	Color backgroundColor = Color.yellow;
 	
-	int currentTime;
+	
 	
 	public MainPanel(int frameSizeX, int frameSizeY, int delay){
 		super();
 		
 		this.delay = delay;
-		
 		this.frameSizeX = frameSizeX;
 		this.frameSizeY = frameSizeY;
 		
@@ -36,9 +40,10 @@ public class MainPanel extends JPanel{
 	
 	public void createCannons(){
 		for(int i = 0; i < cannonCount; i++){
-			fillDropletArray();
-			
-			waterCannon[i] = new WaterCannon(frameSizeX, frameSizeY, cannonCount, i, dropletPattern);
+			Vector<Boolean> dropletPattern = new Vector<Boolean>();
+			fillDropletArray(dropletPattern);
+			waterCannon[i] = new WaterCannon(frameSizeX, frameSizeY, cannonCount, i, dropletPattern, backgroundColor);
+			waterCannon[i].dropletPattern = dropletPattern;
 			waterCannon[i].x = (frameSizeX/cannonCount)*i + (frameSizeX/cannonCount/2);
 			waterCannon[i].y = 0;
 		}
@@ -65,8 +70,8 @@ public class MainPanel extends JPanel{
 		
 	}
 	
-	public void fillDropletArray(){
-		for(int i = 0; i < 100; i++){
+	public void fillDropletArray(Vector<Boolean> dropletPattern){
+		for(int i = 0; i < amountOfDroplets; i++){
 			if(Math.random()*100 <= 50){
 				dropletPattern.add(i, true);
 			}else{
@@ -79,7 +84,7 @@ public class MainPanel extends JPanel{
 	
 	
 	public void paint(Graphics g){
-		g.setColor(Color.orange);
+		g.setColor(backgroundColor);
 		g.fillRect(0, 0, frameSizeX, frameSizeY);
 
 		paintCannon(g);

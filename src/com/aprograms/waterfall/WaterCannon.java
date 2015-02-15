@@ -17,21 +17,28 @@ public class WaterCannon {
 	int recWidth = 5;
 	int recHeight = 15;
 	
+	int xDropletCoordinate;
+	
 	int currentTime;
+	int currentDropletIndex = currentTime-1;
+	
+	int firstDropletIndex = 0;
 	
 	public Vector<Boolean> dropletPattern;
+	public Vector<Droplet> droplets= new Vector<Droplet>(); 
 	
-	public Vector<Droplet> droplets= new Vector<Droplet>(50); 
+	Color cannonColor = Color.BLACK;
+	Color dropletColor = Color.BLUE;
+	Color backgroundColor;
 	
-	Color color = Color.BLACK;
-	
-	public WaterCannon(int frameSizeX, int frameSizeY, int cannonCount, int cannonIndex, Vector<Boolean> dropletPattern){
+	public WaterCannon(int frameSizeX, int frameSizeY, int cannonCount, int cannonIndex, Vector<Boolean> dropletPattern, Color backgroundColor){
 		this.frameSizeX = frameSizeX;
 		this.frameSizeY = frameSizeY;
 		this.cannonCount = cannonCount;
 		this.cannonIndex = cannonIndex;
-		
 		this.dropletPattern = dropletPattern;
+		this.backgroundColor = backgroundColor;
+		xDropletCoordinate = (frameSizeX/cannonCount)*cannonIndex + (frameSizeX/cannonCount/2)-1;
 	}
 	
 	public void tick(int currentTime){
@@ -40,21 +47,61 @@ public class WaterCannon {
 	}
 	
 	
-	public void setDropletParameters(){
-		for(int i = 0; i < droplets.size(); i++){
-			
-		}
-	}
-	
-	
 	public void updateDropletArray(){
-		for(int i = 0; i < dropletPattern.size(); i++){
-			if(dropletPattern.get(i).equals(true)){
-				createDroplet(i);
-				droplets.get(i).x = (frameSizeX/cannonCount)*cannonIndex + (frameSizeX/cannonCount/2)-1;
-				droplets.get(i).y+=5;
+		int currentDropletIndex = currentTime-1;
+		
+		for(int i = 0; i < currentTime; i++){
+			if(firstDropletIndex == 0){
+				if(dropletPattern.get(i).equals(true)){
+					createDroplet(currentDropletIndex);
+					droplets.get(i).color = dropletColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+					System.out.println("FIRST INDEX IS 0: " + firstDropletIndex);
+				}else{
+					createDroplet(currentDropletIndex);
+					droplets.get(i).color = backgroundColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+				}
+			}else if(droplets.get(0).y <= frameSizeY){
+				System.out.println("DROPLET IS IN BOUNDS");
+				if(dropletPattern.get(i).equals(true)){
+					createDroplet(currentDropletIndex);
+					droplets.get(i).color = dropletColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+				}else{
+					createDroplet(currentDropletIndex);
+					droplets.get(i).color = backgroundColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+				}
+			}else{
+				System.out.println("FIRST DROPLET IS OUT OF BOUNDS");
+				if(droplets.get(i).y > frameSizeY && dropletPattern.get(i).equals(true)){
+					droplets.get(i).y = 0;
+					droplets.get(i).color = dropletColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+					
+				}else if(droplets.get(i).y <= frameSizeY && dropletPattern.get(i).equals(true)){
+					droplets.get(i).color = dropletColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+				}else if(droplets.get(i).y > frameSizeY && dropletPattern.get(i).equals(false)){
+					droplets.get(i).y = 0;
+					droplets.get(i).color = backgroundColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+				}else if(droplets.get(i).y <= frameSizeY && dropletPattern.get(i).equals(false)){
+					droplets.get(i).color = backgroundColor;
+					droplets.get(i).x = xDropletCoordinate;
+					droplets.get(i).y+=7;
+				}
 			}
 		}
+		firstDropletIndex++;
 	}
 	
 	public void createDroplet(int i){
@@ -63,16 +110,13 @@ public class WaterCannon {
 	
 	
 	public void paintDroplet(Graphics g){
-//		setDropletParameters();
 		for(int i = 0; i < droplets.size(); i++){
 			droplets.get(i).paint(g);
 		}
 	}
 	
-	
-	
 	public void paintCannon(Graphics g){
-		g.setColor(color);
+		g.setColor(cannonColor);
 		g.fillRect(x, y, recWidth, recHeight);
 	}
 	
