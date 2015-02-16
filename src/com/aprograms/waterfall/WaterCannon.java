@@ -57,7 +57,7 @@ public class WaterCannon {
 					droplets.get(i).color = dropletColor;
 					droplets.get(i).x = xDropletCoordinate;
 					droplets.get(i).y+=7;
-					System.out.println("FIRST INDEX IS 0: " + firstDropletIndex);
+//					System.out.println("FIRST INDEX IS 0: " + firstDropletIndex);
 				}else{
 					createDroplet(currentDropletIndex);
 					droplets.get(i).color = backgroundColor;
